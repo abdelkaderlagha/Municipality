@@ -1,0 +1,9 @@
+#index:
+#    path: /
+#    controller: App\Controller\DefaultController::index
+
+# App/Resources/config/routing/person.yml
+person_list_neighborhoods:
+    path:     /get-neighborhoods-from-city
+    defaults: { _controller: "AppBundle:User:listNeighborhoodsOfCity" }
+    methods:  GET

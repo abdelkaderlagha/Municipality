@@ -1,0 +1,80 @@
+{% extends 'base.html.twig' %} 
+ 
+  
+   
+ 
+ 
+ {% block body %}
+
+
+    <style> /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      </style>
+    
+<article>
+    <div >
+        <h2 class="display-3">{{article.title}}</h2>
+        <p class="lead">Written the {{ article.createdAt | date('d/m/y')}} at {{ article.createdAt | date('h:m')}} in the category {{ article.category.title }}</p>
+        <hr class="my-4">
+        <center>
+            <img src="{{ article.image }}" width="40%">
+        </center>
+        <hr class="my-4"> {{ article.content | raw }}
+
+        <hr class="my-4">
+
+
+   <div id="googleMap" style="width:100%;height:400px;"></div>
+
+<script>
+function myMap() {
+var mapProp= {
+  center:new google.maps.LatLng( {{ article.lattitude }},{{ article.longitude }}),
+  zoom:17,
+};
+var uluru = {lat: {{ article.lattitude }}, lng:{{ article.longitude }}};
+var map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
+var marker = new google.maps.Marker({position: uluru, map: map});
+}
+</script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDFmataeHkb4UQ1X9JQHmSe4xkHik1nNTw&callback=myMap"></script>
+
+
+
+
+   
+       
+    </div>
+     
+
+</article>
+<section id="commentaires">
+    <h3>{{article.comments |length}} Commentaires:</h3> {% for comment in article.comments %}
+
+    <div class="row">
+        <div class="col-3">
+            {{comment.author}}(<small>{{comment.createdAt | date('d/m/y')}} at {{comment.createdAt | date('h:m')}} </small>)
+        </div>
+        <div class="col">
+            {{comment.content | raw}}
+
+        </div>
+    </div>
+    {% endfor %} {{ form_start(commentForm)}} {{ form_row(commentForm.author , {'attr': {'placeholder':"Your name"} })}} {{ form_row(commentForm.content , {'attr': {'placeholder':"Your comment.."} })}}
+
+    <button type="submit" class="btn btn-success">Comment</button>
+    {{ form_end(commentForm) }}
+
+</section>
+
+{% endblock %}

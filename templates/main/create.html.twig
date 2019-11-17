@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+
+{{ form_start(formArticle) }}
+
+{{ form_row(formArticle.title , { 'attr':{'placeholder':'Title of the Request'}})}}
+{{ form_row(formArticle.content , {'attr':{'placeholder':'Content of the Request'}})}}
+{{ form_row(formArticle.category )}}
+{{ form_row(formArticle.image , {'attr':{'placeholder':'Image URL of the Request'}} )}}
+
+{{ form_row(formArticle.lattitude ,{ 'id':"demo"} )}}
+{{ form_row(formArticle.longitude , { 'id':"demo1"})}}
+
+
+
+<button type="submit" class="btn btn-success">
+{% if editMode %}
+
+
+
+Modify a new request/suggestion
+{% else %}
+
+Add a new request/suggestion
+
+{% endif %}
+</button>
+{{ form_end(formArticle) }}
+
+
+<button onclick="getLocation()">Get location!</button>
+
+
+<script>
+var x = document.getElementById("demo");
+var y = document.getElementById("demo1");
+function getLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(showPosition);
+  } else { 
+    x.innerHTML = "Geolocation is not supported by this browser.";
+  }
+}
+function showPosition(position) {
+  x.value =  position.coords.latitude ; 
+  y.value = position.coords.longitude;
+}
+</script>
+
+
+
+
+
+
+
+
+
+
+{% endblock  %}

@@ -1,0 +1,81 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+<style>
+* {
+  box-sizing: border-box;
+}
+
+.column {
+  float: left;
+  width: 33.33%;
+  padding: 5px;
+}
+
+/* Clearfix (clear floats) */
+.row::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+</style>
+ <h2>Officiels:</h2>
+
+ 
+
+{% for o in officiels %}
+
+
+  <div class="column">
+<div class="row">
+  <div class="column">
+    <img src="{{ o.image }}" alt="Snow" style="width:128px;height:128px;">
+  </div>
+  
+</div>
+ 
+    
+    <p >{{ o.name }}</p><p>{{ o.position }}</p>
+  </div>
+  {% endfor %}
+
+
+   
+  <h2>Ask for a meeting:</h2>
+
+
+    {{ form_start(formRDV)}} 
+    
+    {{ form_widget(formRDV) }}
+     <button type="submit" class="btn btn-success">Add RDV</button>
+    {{ form_end(formRDV) }}
+
+
+
+
+{% for rdv in rdvs %}
+
+
+
+  <div clase="row">
+          
+
+           
+
+           
+           
+<div>
+       
+
+<div class="alert alert-dismissible alert-primary">
+ 
+  <small>{{ rdv.date  | date('d/m/y')}}</small> {{ rdv.description }} <a href="#" class="alert-link"> {{ rdv.officiel.name}}</a>.
+</div>
+
+
+{% endfor %}
+
+
+
+{% endblock %}

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+       
+       <title>{% block title %}Welcome!{% endblock %}</title>
+       
+        {% block stylesheets %} <link rel="stylesheet" href="https://bootswatch.com/4/flatly/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="{{ asset('bundles/starrating/css/rating.css') }}" />{% endblock %}
+    </head>
+    <body>
+   
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="{{path("home")}}">Municipality of Korba</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarColor03">
+    <ul class="navbar-nav mr-auto">
+      
+      <li class="nav-item dropdown">
+        <a class="nav-link" href="{{path("report")}}">REPORT AN ISSUE</a>
+      </li>
+      <li><a class="nav-link" href="{{path("officel_show")}}">OFFICIELS
+      </a>
+      </li>
+      {% if not app.user %}
+      <li class="nav-item">
+      <a class="nav-link" href="{{ path('security_login')}}">CONNEXION</a>
+      </li>
+      <li>
+      <a class="nav-link" href="{{ path('security_registration')}}">INSCRIPTION</a> 
+      </li>
+      {% else %}
+       <li class="nav-item">
+      <a class="nav-link" href="{{ path('security_logout')}}">DECONNEXION</a>
+      
+      </li>
+     {% endif %}
+      
+    </ul>
+   
+  </div>
+</nav>
+
+
+<div class="container">
+        {% block body %}{% endblock %}
+        {% block javascripts %} <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script src="{{ asset('bundles/starrating/js/rating.js') }}"></script>{% endblock %}
+ </div>   
+    </body>
+</html>

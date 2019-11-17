@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+
+<a class="btn btn-success"href="{{path("blog_create")}}">Create new issue / suggestion </a>
+
+<section class="articles">
+
+
+{% for article in articles%}
+<article>
+<div class="jumbotron">
+  <h2 class="display-3">{{article.title}}</h2>
+  <p class="lead">Written the {{ article.createdAt | date('d/m/y')}} at {{ article.createdAt | date('h:m')}} in the category {{ article.category.title }}</p>
+  <hr class="my-4">
+  <center>
+  <img src="{{ article.image }}" width="40%">
+  </center>
+  <hr class="my-4">
+  
+  {{ article.content | raw }}
+  <p class="lead">
+    <a class="btn btn-primary btn-lg" href="{{path("blog_show" , { 'id': article.id })}}" role="button">Learn more</a>
+    <a href="{{path("blog-edit" , { 'id': article.id })}}" class="btn btn-success btn-lg">Edit Post</a>
+  </p>
+</div>
+</article>
+{% endfor %}
+
+
+</section>
+
+
+
+
+
+
+
+
+
+
+{% endblock  %}
