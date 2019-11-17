@@ -21,7 +21,7 @@ Municipality uses a number of open source projects to work properly:
 
 * [Bootswatch](https://bootswatch.com/) - Themes are built for the latest version of Bootstrap!
 * [Symfony](https://symfony.com/)- PHP framework
-* [Twig] (https://twig.symfony.com/)- Twig compiles templates down to plain optimized PHP code.
+* [Twig](https://twig.symfony.com/)- Twig compiles templates down to plain optimized PHP code.
 
 And of course Municipality itself is open source with a [public repository][dill]
  on GitHub.
