@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20191112110055 extends AbstractMigration
+final class Version20191201194026 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -22,13 +22,11 @@ final class Version20191112110055 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE neighborhood CHANGE city_id city_id INT DEFAULT NULL');
+        $this->addSql('CREATE TABLE zip_code (id INT AUTO_INCREMENT NOT NULL, zip_code VARCHAR(255) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('ALTER TABLE article ADD zip_code_id INT DEFAULT NULL, CHANGE city_id city_id INT DEFAULT NULL');
+        $this->addSql('ALTER TABLE article ADD CONSTRAINT FK_23A0E669CEB97F7 FOREIGN KEY (zip_code_id) REFERENCES zip_code (id)');
+        $this->addSql('CREATE INDEX IDX_23A0E669CEB97F7 ON article (zip_code_id)');
         $this->addSql('ALTER TABLE comment CHANGE article_id article_id INT DEFAULT NULL');
-        $this->addSql('ALTER TABLE user DROP FOREIGN KEY FK_8D93D649803BB24B');
-        $this->addSql('ALTER TABLE user DROP FOREIGN KEY FK_8D93D6498BAC62AF');
-        $this->addSql('DROP INDEX IDX_8D93D649803BB24B ON user');
-        $this->addSql('DROP INDEX IDX_8D93D6498BAC62AF ON user');
-        $this->addSql('ALTER TABLE user DROP city_id, DROP neighborhood_id, DROP name, DROP lastname');
         $this->addSql('ALTER TABLE private_rdv_cat CHANGE user_id user_id INT DEFAULT NULL, CHANGE officiel_id officiel_id INT DEFAULT NULL');
         $this->addSql('ALTER TABLE rate CHANGE article_id article_id INT DEFAULT NULL');
     }
@@ -38,14 +36,12 @@ final class Version20191112110055 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
+        $this->addSql('ALTER TABLE article DROP FOREIGN KEY FK_23A0E669CEB97F7');
+        $this->addSql('DROP TABLE zip_code');
+        $this->addSql('DROP INDEX IDX_23A0E669CEB97F7 ON article');
+        $this->addSql('ALTER TABLE article DROP zip_code_id, CHANGE city_id city_id INT DEFAULT NULL');
         $this->addSql('ALTER TABLE comment CHANGE article_id article_id INT DEFAULT NULL');
-        $this->addSql('ALTER TABLE neighborhood CHANGE city_id city_id INT DEFAULT NULL');
         $this->addSql('ALTER TABLE private_rdv_cat CHANGE user_id user_id INT DEFAULT NULL, CHANGE officiel_id officiel_id INT DEFAULT NULL');
         $this->addSql('ALTER TABLE rate CHANGE article_id article_id INT DEFAULT NULL');
-        $this->addSql('ALTER TABLE user ADD city_id INT DEFAULT NULL, ADD neighborhood_id INT DEFAULT NULL, ADD name VARCHAR(255) CHARACTER SET utf8mb4 NOT NULL COLLATE `utf8mb4_unicode_ci`, ADD lastname VARCHAR(255) CHARACTER SET utf8mb4 NOT NULL COLLATE `utf8mb4_unicode_ci`');
-        $this->addSql('ALTER TABLE user ADD CONSTRAINT FK_8D93D649803BB24B FOREIGN KEY (neighborhood_id) REFERENCES neighborhood (id)');
-        $this->addSql('ALTER TABLE user ADD CONSTRAINT FK_8D93D6498BAC62AF FOREIGN KEY (city_id) REFERENCES city (id)');
-        $this->addSql('CREATE INDEX IDX_8D93D649803BB24B ON user (neighborhood_id)');
-        $this->addSql('CREATE INDEX IDX_8D93D6498BAC62AF ON user (city_id)');
     }
 }

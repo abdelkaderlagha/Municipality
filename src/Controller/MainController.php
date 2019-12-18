@@ -1,10 +1,13 @@
 <?php
 namespace App\Controller;
+use App\Entity\City;
 use App\Entity\Article;
 use App\Entity\Comment;
+use App\Entity\ZipCode;
 use App\Entity\Category;
 use App\Entity\Officiels;
 use App\Form\CommentType;
+use App\Entity\Neighborhood;
 use App\Entity\PrivateRdvCat;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -52,6 +55,18 @@ class MainController extends AbstractController
                     ->add('category', EntityType::class, [
                         'class' => Category::class,
                         'choice_label' => 'title'
+                    ])
+                    ->add('Neighborhood', EntityType::class, [
+                        'class' => Neighborhood::class,
+                        'choice_label' => 'name'
+                    ])
+                    ->add('City', EntityType::class, [
+                        'class' => City::class,
+                        'choice_label' => 'city'
+                    ])
+                    ->add('zipCode', EntityType::class, [
+                        'class' => ZipCode::class,
+                        'choice_label' => 'zipCode'
                     ])
                     ->add('content')
                     ->add('image')

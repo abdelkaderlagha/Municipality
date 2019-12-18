@@ -7,9 +7,9 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\CityRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\ZipCodeRepository")
  */
-class City
+class ZipCode
 {
     /**
      * @ORM\Id()
@@ -21,10 +21,10 @@ class City
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $city;
+    private $zipCode;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Article", mappedBy="city")
+     * @ORM\OneToMany(targetEntity="App\Entity\Article", mappedBy="zipCode")
      */
     private $articles;
 
@@ -38,14 +38,14 @@ class City
         return $this->id;
     }
 
-    public function getCity(): ?string
+    public function getZipCode(): ?string
     {
-        return $this->city;
+        return $this->zipCode;
     }
 
-    public function setCity(string $city): self
+    public function setZipCode(string $zipCode): self
     {
-        $this->city = $city;
+        $this->zipCode = $zipCode;
 
         return $this;
     }
@@ -62,7 +62,7 @@ class City
     {
         if (!$this->articles->contains($article)) {
             $this->articles[] = $article;
-            $article->setCity($this);
+            $article->setZipCode($this);
         }
 
         return $this;
@@ -73,8 +73,8 @@ class City
         if ($this->articles->contains($article)) {
             $this->articles->removeElement($article);
             // set the owning side to null (unless already changed)
-            if ($article->getCity() === $this) {
-                $article->setCity(null);
+            if ($article->getZipCode() === $this) {
+                $article->setZipCode(null);
             }
         }
 

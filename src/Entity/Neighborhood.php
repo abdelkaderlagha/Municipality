@@ -24,18 +24,13 @@ class Neighborhood
     private $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\City", inversedBy="neighborhoods")
+     * @ORM\OneToMany(targetEntity="App\Entity\Article", mappedBy="neighborhood")
      */
-    private $city;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\User", mappedBy="neighborhood")
-     */
-    private $users;
+    private $articles;
 
     public function __construct()
     {
-        $this->users = new ArrayCollection();
+        $this->articles = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -55,43 +50,31 @@ class Neighborhood
         return $this;
     }
 
-    public function getCity(): ?City
-    {
-        return $this->city;
-    }
-
-    public function setCity(?City $city): self
-    {
-        $this->city = $city;
-
-        return $this;
-    }
-
     /**
-     * @return Collection|User[]
+     * @return Collection|Article[]
      */
-    public function getUsers(): Collection
+    public function getArticles(): Collection
     {
-        return $this->users;
+        return $this->articles;
     }
 
-    public function addUser(User $user): self
+    public function addArticle(Article $article): self
     {
-        if (!$this->users->contains($user)) {
-            $this->users[] = $user;
-            $user->setNeighborhood($this);
+        if (!$this->articles->contains($article)) {
+            $this->articles[] = $article;
+            $article->setNeighborhood($this);
         }
 
         return $this;
     }
 
-    public function removeUser(User $user): self
+    public function removeArticle(Article $article): self
     {
-        if ($this->users->contains($user)) {
-            $this->users->removeElement($user);
+        if ($this->articles->contains($article)) {
+            $this->articles->removeElement($article);
             // set the owning side to null (unless already changed)
-            if ($user->getNeighborhood() === $this) {
-                $user->setNeighborhood(null);
+            if ($article->getNeighborhood() === $this) {
+                $article->setNeighborhood(null);
             }
         }
 

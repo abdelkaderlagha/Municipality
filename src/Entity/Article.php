@@ -59,9 +59,28 @@ class Article
      */
     private $comments;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\City", inversedBy="articles")
+     */
+    private $city;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\ZipCode", inversedBy="articles")
+     */
+    private $zipCode;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Neighborhood", inversedBy="articles")
+     */
+    private $neighborhood;
+
+   
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
+        $this->cities = new ArrayCollection();
+        $this->neighborhoods = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -183,4 +202,42 @@ class Article
 
         return $this;
     }
+
+    public function getCity(): ?City
+    {
+        return $this->city;
+    }
+
+    public function setCity(?City $city): self
+    {
+        $this->city = $city;
+
+        return $this;
+    }
+
+    public function getZipCode(): ?ZipCode
+    {
+        return $this->zipCode;
+    }
+
+    public function setZipCode(?ZipCode $zipCode): self
+    {
+        $this->zipCode = $zipCode;
+
+        return $this;
+    }
+
+    public function getNeighborhood(): ?Neighborhood
+    {
+        return $this->neighborhood;
+    }
+
+    public function setNeighborhood(?Neighborhood $neighborhood): self
+    {
+        $this->neighborhood = $neighborhood;
+
+        return $this;
+    }
+
+  
 }
